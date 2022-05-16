@@ -32,3 +32,4 @@ $tf*/
 libtorch
 x64
 .vs
+my_model/

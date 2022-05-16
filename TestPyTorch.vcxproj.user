@@ -5,7 +5,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerCommandArguments>C:\Test\TestPyTorch\TestPyTorch\my_model\traced_res50_model_epoch_19.pt</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>.\my_model\traced_resnet_model.pt</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

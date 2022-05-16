@@ -91,7 +91,6 @@ auto ToCvImage(at::Tensor tensor)
     try
     {
         cv::Mat output_mat(cv::Size{ height, width }, CV_8UC3, tensor.data_ptr<uchar>());
-        
         show_image(output_mat, "converted image from tensor");
         return output_mat.clone();
     }
@@ -122,7 +121,7 @@ int main(int argc, const char* argv[])
         // Deserialize the ScriptModule from a file using torch::jit::load().
         module = torch::jit::load(strModelFile.c_str());
 
-        cv::Mat matRead = cv::imread("./TestImg/good_image_10.png", cv::ImreadModes::IMREAD_COLOR);
+        cv::Mat matRead = cv::imread("./TestImg/bad_image_10.png", cv::ImreadModes::IMREAD_COLOR);
         if (matRead.empty()) {
             std::cout << "Failed to read image" << std::endl;
             return -1;
