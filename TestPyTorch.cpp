@@ -121,7 +121,7 @@ int main(int argc, const char* argv[])
         // Deserialize the ScriptModule from a file using torch::jit::load().
         module = torch::jit::load(strModelFile.c_str());
 
-        cv::Mat matRead = cv::imread("./TestImg/bad_image_10.png", cv::ImreadModes::IMREAD_COLOR);
+        cv::Mat matRead = cv::imread("./TestImg/TestOCR_Char_Y.png", cv::ImreadModes::IMREAD_COLOR);
         if (matRead.empty()) {
             std::cout << "Failed to read image" << std::endl;
             return -1;
@@ -135,16 +135,23 @@ int main(int argc, const char* argv[])
 
         std::cout << "After permute, test tenor shape: " << tensor.sizes() << std::endl;
 
-
         tensor = tensor.toType(c10::kFloat).div(255);
-
 
         std::vector<torch::jit::IValue> inputs;
         //inputs.push_back(testTensor);
         inputs.push_back(tensor);
 
         at::Tensor output = module.forward(inputs).toTensor();
+
         std::cout << output.slice(/*dim=*/1, /*start=*/0, /*end=*/100) << '\n';
+
+        auto maxResult = torch::max(output, 1);
+        auto tensorValue = std::get<0>(maxResult);
+        auto tensorIndex = std::get<1>(maxResult);
+        std::cout << "Value " << tensorValue << ",index  " << tensorIndex << std::endl;
+
+        int index = tensorIndex[0].item<int>();
+        std::cout << "Max index " << index << std::endl;
     }
     catch (const c10::Error& e) {
         std::cerr << "error loading the model\n";
